@@ -9,6 +9,7 @@ BLUETOOTH_IF::BLUETOOTH_IF()
 int BLUETOOTH_IF::init() 
 {
     m_serial = new SoftwareSerial(BT_RX, BT_TX);
+    return 0;
 }
 
 int BLUETOOTH_IF::begin() 
@@ -31,4 +32,31 @@ int BLUETOOTH_IF::getMessage(char *msg)
 
     strcpy(msg,bt_bf);
     return byte_cnt;
+}
+
+int BLUETOOTH_IF::transmitFrame(COM_FRAME frame) 
+{
+    uint8_t frame_bf[64];
+    int len = -1;
+    frame.toByteArray(&frame_bf[0],len);
+
+    int sent = m_serial->write(frame_bf,len);
+    return sent;  
+}
+
+int BLUETOOTH_IF::receiveFrame(COM_FRAME& frame) 
+{
+    if(m_serial->available() == 0)
+        return -1;
+
+    int frame_size = m_serial->available();
+    uint8_t f_buff[frame_size];
+
+    for (int i = 0; i < frame_size; i++)
+    {
+        f_buff[i] = m_serial->read();
+    }
+    
+    frame.m_data_buff = f_buff;
+    return frame_size;
 }

@@ -12,6 +12,8 @@
 #include "can_if.h"
 #include "bluetooth_if.h"
 
+#include "com_frame.h"
+
 #include "mcp_can.h"
 
 OLED_IF oled;
@@ -41,15 +43,10 @@ void setup() {
 
 void loop() {
 
-    char bt_bf[16];
-    int bt_bytes = bt.getMessage(bt_bf);
 
-    if(bt_bytes > 0){
-      Serial.println(bt_bf);
-      oled.setText(bt_bf);
-    }
+  COM_FRAME dummy_frame;
+  bt.transmitFrame(dummy_frame);
 
   delay(1000);
-  Serial.println("LOOP");
 
 }

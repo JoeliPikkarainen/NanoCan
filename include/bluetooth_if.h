@@ -2,6 +2,7 @@
 #define BLUETOOTH_IF_H
 
 #include <SoftwareSerial.h>
+#include <com_frame.h>
 
 class BLUETOOTH_IF{
 
@@ -12,6 +13,9 @@ public:
     int begin();
 
     int getMessage(char *msg);
+    
+    int transmitFrame(COM_FRAME frame);
+    int receiveFrame(COM_FRAME& frame);
     
 private:
     SoftwareSerial* m_serial;
