@@ -57,6 +57,6 @@ int BLUETOOTH_IF::receiveFrame(COM_FRAME& frame)
         f_buff[i] = m_serial->read();
     }
     
-    frame.m_data_buff = f_buff;
+    frame.fromByteArray(f_buff,frame_size);
     return frame_size;
 }

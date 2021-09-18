@@ -44,7 +44,11 @@ void setup() {
 void loop() {
 
 
+  COM_FRAME rx_frame;
+  bt.receiveFrame(rx_frame);
+
   COM_FRAME dummy_frame;
+  dummy_frame.toDummyFrame();
   bt.transmitFrame(dummy_frame);
 
   delay(1000);

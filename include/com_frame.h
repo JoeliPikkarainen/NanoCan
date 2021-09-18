@@ -32,6 +32,7 @@ enum class COMMAND_BYTE{
     CAN_FRAME_DUMMY = 0x03,
     STATUS_REQ = 0x04,
     STATUS_ANS = 0x05,
+    START_CAN_STREAM = 0x06,
 };
 
 class COM_FRAME{
@@ -46,15 +47,19 @@ public:
 
     COM_FRAME();
 
+        //FRAME
         uint8_t m_sync;
         SENDER_BYTE m_sb;
         COMMAND_BYTE m_cb;
         uint8_t m_data_len;
-        uint8_t* m_data_buff;
+        uint8_t m_data_buff[16];
         uint8_t m_eot;
 
+        //CONST
+        static const uint8_t k_empty_size = 5;
+
         void toByteArray(uint8_t* ba, int& len);
-        bool fromByteArrar(uint8_t* buff, int len);
+        bool fromByteArray(uint8_t* buff, int len);
 
         void toDummyFrame();
     

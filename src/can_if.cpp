@@ -17,4 +17,16 @@ MCP_CAN* CAN_IF::getCan()
     return m_can;
 }
 
+bool CAN_IF::receive(CAN_FRAME& frame) 
+{
+    if(m_can->checkReceive() != CAN_MSGAVAIL)
+        return false;
+
+    uint8_t len = 0;
+    m_can->readMsgBuf(&len,frame.bf);
+    frame.id = m_can->getCanId();
+
+    return true;
+}
+
 
