@@ -2,6 +2,7 @@
 #define COM_FRAME_H
 
 #include <stdint.h>
+#include "can_if.h"
 
 /*
 [0] SYNC BYTE = 0xCF
@@ -33,6 +34,7 @@ enum class COMMAND_BYTE{
     STATUS_REQ = 0x04,
     STATUS_ANS = 0x05,
     START_CAN_STREAM = 0x06,
+    STOP_CAN_STREAM = 0x07
 };
 
 class COM_FRAME{
@@ -62,6 +64,7 @@ public:
         bool fromByteArray(uint8_t* buff, int len);
 
         void toDummyFrame();
+        void addCanFrame(const CAN_FRAME& frame);
     
 private:
 

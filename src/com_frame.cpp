@@ -71,4 +71,13 @@ void COM_FRAME::toDummyFrame()
 
 }
 
+void COM_FRAME::addCanFrame(const CAN_FRAME& frame) 
+{
+    m_data_len = frame.len;
+
+    for(int i = 0; i < m_data_len; i++){
+        m_data_buff[i] = frame.bf[i];
+    }
+}
+
 

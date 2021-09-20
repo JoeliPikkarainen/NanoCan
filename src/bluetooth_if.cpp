@@ -15,7 +15,6 @@ int BLUETOOTH_IF::init()
 int BLUETOOTH_IF::begin() 
 {
     m_serial->begin(9600);
-    m_serial->write("START BLUETOOTH\n\r");
     return 0;
 }
 

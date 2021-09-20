@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <SPI.h>
 #include "mcp_can.h"
+#include <CAN.h>
 
 class CAN_FRAME{
 
@@ -12,6 +13,7 @@ public:
 
     unsigned long id;
     uint8_t bf[8];
+    uint8_t len;
 
 private:
 
@@ -22,9 +24,12 @@ class CAN_IF{
 public:
     CAN_IF();
     
-    int init();
-    MCP_CAN* getCan();
+    bool init();
+    bool init2();
+    MCP2515Class getCan();
+    MCP_CAN* getCan2();
 
+    bool receive2(CAN_FRAME& frame);
     bool receive(CAN_FRAME& frame);
 
 private:
