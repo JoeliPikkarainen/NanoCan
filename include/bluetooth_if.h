@@ -16,6 +16,9 @@ public:
     
     int transmitFrame(COM_FRAME frame);
     int receiveFrame(COM_FRAME& frame);
+
+    int transmitInfoText(const char* str, int len);
+    bool connected();
     
 private:
     SoftwareSerial* m_serial;

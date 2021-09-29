@@ -15,6 +15,7 @@ public:
     int setText(const char* str);
 
 private:
+    bool inited = false;
 
 };
 

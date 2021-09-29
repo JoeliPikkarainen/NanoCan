@@ -3,13 +3,15 @@
 
 class AdapterStates
 {
-private:
     /* data */
 public:
     AdapterStates(/* args */);
     ~AdapterStates();
 
     bool streaming = true;
+
+private:
+
 };
 
 AdapterStates::AdapterStates(/* args */)
@@ -19,5 +21,15 @@ AdapterStates::AdapterStates(/* args */)
 AdapterStates::~AdapterStates()
 {
 }
+
+class AdapterSettings{
+
+public:
+    uint16_t can_rate_kbs = 500;
+
+private:
+
+};
+
 
 #endif

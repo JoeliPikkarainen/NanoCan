@@ -3,21 +3,11 @@
 
 #include <Arduino.h>
 #include <SPI.h>
-#include "mcp_can.h"
 #include <CAN.h>
 
-class CAN_FRAME{
+#include "com_frame.h"
 
-public:
-    CAN_FRAME();
 
-    unsigned long id;
-    uint8_t bf[8];
-    uint8_t len;
-
-private:
-
-};
 
 class CAN_IF{
 
@@ -25,15 +15,16 @@ public:
     CAN_IF();
     
     bool init();
-    bool init2();
-    MCP2515Class getCan();
-    MCP_CAN* getCan2();
+    bool isInited() { return inited;};
 
-    bool receive2(CAN_FRAME& frame);
+    MCP2515Class getCan();
+    
     bool receive(CAN_FRAME& frame);
+    void sleepEnable(bool enable);
+
+    uint16_t rateKbs = 500;
 
 private:
-    MCP_CAN* m_can;
-
+    bool inited = false;
 };
 #endif

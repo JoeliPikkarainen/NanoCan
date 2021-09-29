@@ -1,6 +1,8 @@
 #include "bluetooth_if.h"
 #include "defines.h"
 
+#include "Arduino.h"
+
 BLUETOOTH_IF::BLUETOOTH_IF() 
 {
     
@@ -9,6 +11,7 @@ BLUETOOTH_IF::BLUETOOTH_IF()
 int BLUETOOTH_IF::init() 
 {
     m_serial = new SoftwareSerial(BT_RX, BT_TX);
+    pinMode(BT_STATE, INPUT);
     return 0;
 }
 
@@ -58,4 +61,27 @@ int BLUETOOTH_IF::receiveFrame(COM_FRAME& frame)
     
     frame.fromByteArray(f_buff,frame_size);
     return frame_size;
+}
+
+int BLUETOOTH_IF::transmitInfoText(const char* str, int len) 
+{
+    uint8_t bf[16];
+    for(int i = 0; i < len; i++){
+        bf[i] = str[i];
+    }
+
+    COM_FRAME f = COM_FRAME(
+        SENDER_BYTE::SENDER_CAN_MODULE_RESP,
+        COMMNAD_TYPE_BYTE::NULL_TYPE_BYTE,
+        COMMAND_BYTE::INFO_STRING,
+        len,
+        bf
+    );
+
+    transmitFrame(f);
+}
+
+bool BLUETOOTH_IF::connected() 
+{
+    return digitalRead(BT_STATE);
 }
